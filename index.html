@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Chatbot</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #chat-container {
+            width: 80%;
+            max-width: 600px;
+            height: 70%;
+            overflow-y: auto;
+            padding: 1rem;
+            box-sizing: border-box;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+        .message {
+            margin: 0.5rem 0;
+        }
+        .user {
+            text-align: right;
+            color: white;
+        }
+        .bot {
+            text-align: left;
+            color: white;
+        }
+        input {
+            position: fixed;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            padding: 1rem;
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+    <input id="input" type="text" placeholder="Type something and press Enter...">
+
+    <script>
+        const inputField = document.getElementById('input');
+        const chatContainer = document.getElementById('chat-container');
+        const responses = ["Woof", "Woof woof", "Woof woof woof woof woof"];
+
+        inputField.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && inputField.value.trim() !== '') {
+                const userMessage = inputField.value.trim();
+                displayMessage(userMessage, 'user');
+                inputField.value = '';
+                setTimeout(() => {
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    displayMessage(randomResponse, 'bot');
+                }, 500);
+            }
+        });
+
+        function displayMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = message;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
